@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-image: url(BG.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h2,
+h3 {
+  text-align: center;
+  margin: 50px 0;
+  color: #fff;
+}
+
+h2 {
+  font-size: 28px;
+}
+h3 {
+  font-size: 25px;
+}
+
+.main-div,
+.alternate-div {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  /* padding: 0 700px; */
+  margin-bottom: 50px;
+  width: 400px;
+  padding: 0 50px;
+  /* border: 2px solid red; */
+}
+
+.actor-item {
+  margin: 5px;
+  cursor: pointer;
+  padding: 20px;
+  font-size: 25px;
+  width: 300px;
+  border: none;
+  /* box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+}
+.yes-button,
+.no-button,
+.reset-button {
+  margin: 5px 10px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 25px;
+  padding: 10px;
+  border-radius: 50px;
+  height: 50px;
+  width: 150px;
+  background: transparent;
+  color: #fff;
+  /* border: none; */
+  /* border: 5px solid gray; */
+}
+
+.buttons {
+  text-align: center;
+  width: 400px;
+  margin: 0 auto 60px;
+
+  padding: 10px;
+}
+
+.alternate-div {
+  display: none;
+  color: #fff;
+  font-weight: 600;
+}
