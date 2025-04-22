@@ -1,215 +1,66 @@
+  const mainSection = document.getElementById('main-section');
+    const guessSection = document.getElementById('guess-section');
+    const alternateDivs = document.querySelectorAll('.alternate-div');
+    const resultMessage = document.getElementById('result-message');
 
-let currentIndex = 0;
-let scoreMap = {};
+    let currentIndex = 0;
+    let scoreMap = {};
+    const allActors = Array.from(document.querySelectorAll('.main-div .actor-item')).map(el => el.textContent);
 
-
-function startGuessing() {
-  mainSection.classList.add('hidden');
-  guessSection.classList.remove('hidden');
-  alternateDivs[0].classList.remove('hidden');
-}
-
-
-function handleResponse(answer) {
-  const currentDiv = alternateDivs[currentIndex];
-  const actors = Array.from(currentDiv.querySelectorAll('.actor-item')).map(el => el.textContent);
-
-  actors.forEach(actor => {
-    if (!scoreMap[actor]) scoreMap[actor] = 0;
-    scoreMap[actor] += (answer === 'Yes') ? 1 : -1;
-  });
-
-  currentDiv.classList.add('hidden');
-  currentIndex++;
-
-  if (currentIndex < alternateDivs.length) {
-    alternateDivs[currentIndex].classList.remove('hidden');
-  } else {
-    displayResult();
-  }
-}
-
-
-function displayResult() {
-  let bestGuess = null;
-  let maxScore = -Infinity;
-
-  allActors.forEach(actor => {
-    const score = scoreMap[actor] || 0;
-    if (score > maxScore) {
-      maxScore = score;
-      bestGuess = actor;
+    function startGuessing() {
+      mainSection.classList.add('hidden');
+      guessSection.classList.remove('hidden');
+      alternateDivs[0].classList.remove('hidden');
     }
-  });
 
-  resultMessage.textContent = maxScore > 0
-    ? `🎉 I guess your favourite actor is: ${bestGuess}!`
-    : `😅 Hmm... I couldn't guess it this time.`;
+    function handleResponse(answer) {
+      const currentDiv = alternateDivs[currentIndex];
+      const actors = Array.from(currentDiv.querySelectorAll('.actor-item')).map(el => el.textContent);
 
-  document.querySelector('.button-group').style.display = 'none';
-}
+      actors.forEach(actor => {
+        if (!scoreMap[actor]) scoreMap[actor] = 0;
+        scoreMap[actor] += (answer === 'Yes') ? 1 : -1;
+      });
 
-function resetGame() {
-  currentIndex = 0;
-  scoreMap = {};
-  resultMessage.textContent = '';
+      currentDiv.classList.add('hidden');
+      currentIndex++;
 
-  mainSection.classList.remove('hidden');
-  guessSection.classList.add('hidden');
-
-  alternateDivs.forEach(div => div.classList.add('hidden'));
-  alternateDivs[0].classList.remove('hidden');
-
-  document.querySelectorAll('.button-group')[1].style.display = 'flex';
-}
-
-
-// Select all actor items within the main div
-const actorItems = document.querySelectorAll('.main-div .actor-item');
-let selectedActor = '';
-const yesButton = document.querySelector('.yes-button');
-const noButton = document.querySelector('.no-button');
-const resetButton = document.querySelector('.reset-button');
-
-// Variable to keep track of the current alternate div index
-let currentDivIndex = 0;
-
-const alternateDivs = document.querySelectorAll('.alternate-div');
-
-// Array to store user responses
-let userResponses = [];
-
-// Add event listener to each actor item in the main div
-actorItems.forEach(actor => {
-    actor.addEventListener('click', () => {
-        // Store the clicked actor's name in the variable
-        selectedActor = actor.textContent;
-
-      
-        document.querySelector('.main-div').style.display = 'none';
-        document.querySelector('h3').textContent = 'IS Your Selected Actor Appeared In This';
-
-        yesButton.disabled = false;
-        noButton.disabled = false;
-
-        // Reset the responses and start with the first div
-        userResponses = [];
-        currentDivIndex = 0;
-        showCurrentDiv();
-    });
-});
-
-// Function to show the current alternate div
-function showCurrentDiv() {
-   
-    alternateDivs.forEach(div => div.style.display = 'none');
-
-    // Show the current alternate div
-    if (alternateDivs[currentDivIndex]) {
-        alternateDivs[currentDivIndex].style.display = 'flex';
+      if (currentIndex < alternateDivs.length) {
+        alternateDivs[currentIndex].classList.remove('hidden');
+      } else {
+        displayResult();
+      }
     }
-}
 
-yesButton.addEventListener('click', () => {
-    if (selectedActor) {
-        const currentDiv = alternateDivs[currentDivIndex];
-        const actorsInDiv = Array.from(currentDiv.querySelectorAll('.actor-item')).map(actor => actor.textContent);
-   
-        userResponses[currentDivIndex] = {
-            divContainsActor: actorsInDiv.includes(selectedActor),
-            response: 'Yes'
-        };
+    function displayResult() {
+      let bestGuess = null;
+      let maxScore = -Infinity;
 
-        // Move to the next div
-        currentDivIndex++;
-        if (currentDivIndex < alternateDivs.length) {
-            showCurrentDiv();
-        } else {
-            displayResults();
+      allActors.forEach(actor => {
+        const score = scoreMap[actor] || 0;
+        if (score > maxScore) {
+          maxScore = score;
+          bestGuess = actor;
         }
-    } 
-});
+      });
 
-// Add event listener to the No button
-noButton.addEventListener('click', () => {
-    if (selectedActor) {
-        const currentDiv = alternateDivs[currentDivIndex];
-        const actorsInDiv = Array.from(currentDiv.querySelectorAll('.actor-item')).map(actor => actor.textContent);
+      resultMessage.textContent = maxScore > 0
+        ? `🎉 I guess your favourite actor is: ${bestGuess}!`
+        : `😅 Hmm... I couldn't guess it this time.`;
 
-        // Store the response (No)
-        userResponses[currentDivIndex] = {
-            divContainsActor: actorsInDiv.includes(selectedActor),
-            response: 'No'
-        };
-
-        // Move to the next div
-        currentDivIndex++;
-        if (currentDivIndex < alternateDivs.length) {
-            showCurrentDiv();
-        } else {
-            displayResults();
-        }
-    } else {
-        alert('Please select an actor first.');
-    }
-});
-
-// Function to display the results after all divs are processed
-function displayResults() {
-    // Check if responses match the actual presence of the actor
-    let correct = true;
-    userResponses.forEach((response, index) => {
-        const div = alternateDivs[index];
-        const actorsInDiv = Array.from(div.querySelectorAll('.actor-item')).map(actor => actor.textContent);
-        const actualPresence = actorsInDiv.includes(selectedActor);
-
-        if ((response.response === 'Yes' && !actualPresence) || (response.response === 'No' && actualPresence)) {
-            correct = false;
-        }
-    });
-
-    // Provide the result to the user
-    const resultMessage = document.createElement('p');
-    resultMessage.style.cssText = `
-    font-size: 30px;
-    text-align: center;
-    color: white;
-    font-weight: 600;
-    margin-bottom: 150px;
-`;
-
-    resultMessage.id = 'result-message';
-    if (correct) {
-        resultMessage.textContent = `Your Favourite Actor is "${selectedActor}"`;
-
-    } else {
-        resultMessage.textContent = `I Think You Made a Wrong Guess`;
+      document.querySelector('.button-group').style.display = 'none';
     }
 
-    document.body.appendChild(resultMessage);
+    function resetGame() {
+      currentIndex = 0;
+      scoreMap = {};
+      resultMessage.textContent = '';
 
-    // Disable the Yes and No buttons
-    yesButton.disabled = true;
-    noButton.disabled = true;
-}
+      mainSection.classList.remove('hidden');
+      guessSection.classList.add('hidden');
 
-// Add event listener to the Reset button
-resetButton.addEventListener('click', () => {
-    selectedActor = '';
-    currentDivIndex = 0;
-    userResponses = [];
+      alternateDivs.forEach(div => div.classList.add('hidden'));
+      alternateDivs[0].classList.remove('hidden');
 
-    // Hide all alternate divs and reset button states
-    alternateDivs.forEach(div => div.style.display = 'none');
-    yesButton.disabled = true;
-    noButton.disabled = true;
-
-    // Show the main div again for a new selection
-    document.querySelector('.main-div').style.display = 'block';
-
-    // Remove the result message if it exists
-    const existingResultMessage = document.getElementById('result-message');
-    if (existingResultMessage) {
-        existingResultMessage.remove();
+      document.querySelectorAll('.button-group')[1].style.display = 'flex';
     }
-});
