@@ -1,1 +1,81 @@
 <!-- ons -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guess Your Favourite Actor</title>
+</head>
+<body>
+
+  <h2>🎭 Let me guess your Favourite Actor!</h2>
+
+  <!-- Main selection -->
+  <div id="main-section">
+    <h3>Step 1: Think of any one actor below 👇</h3>
+    <div class="main-div">
+      <div class="actor-item">Prabhas</div>
+      <div class="actor-item">Rana</div>
+      <div class="actor-item">Jr.NTR</div>
+      <div class="actor-item">Allu Arjun</div>
+      <div class="actor-item">Vijay Sethupathi</div>
+      <div class="actor-item">Kajal</div>
+      <div class="actor-item">Ramcharan</div>
+      <div class="actor-item">Mahesh Babu</div>
+      <div class="actor-item">Jashwanth</div>
+    </div>
+
+    <h3>Have you selected an actor in your mind?</h3>
+    <div class="button-group">
+      <button onclick="startGuessing()">Yes</button>
+      <button onclick="alert('Please pick one actor from above before proceeding.')">No</button>
+    </div>
+  </div>
+
+  <!-- Guessing section -->
+  <div id="guess-section" class="hidden">
+    <h3>Step 2: Is your actor in this list?</h3>
+
+    <div class="alternate-div">
+      <div class="actor-item">Prabhas</div>
+      <div class="actor-item">Allu Arjun</div>
+      <div class="actor-item">Mahesh Babu</div>
+      <div class="actor-item">Jashwanth</div>
+    </div>
+
+    <div class="alternate-div hidden">
+      <div class="actor-item">Prabhas</div>
+      <div class="actor-item">Allu Arjun</div>
+      <div class="actor-item">Jr.NTR</div>
+      <div class="actor-item">Ramcharan</div>
+    </div>
+
+    <div class="alternate-div hidden">
+      <div class="actor-item">Rana</div>
+      <div class="actor-item">Prabhas</div>
+      <div class="actor-item">Mahesh Babu</div>
+    </div>
+
+    <div class="alternate-div hidden">
+      <div class="actor-item">Ramcharan</div>
+      <div class="actor-item">Jashwanth</div>
+      <div class="actor-item">Kajal</div>
+      <div class="actor-item">Rana</div>
+    </div>
+
+    <div class="button-group">
+      <button onclick="handleResponse('Yes')">Yes</button>
+      <button onclick="handleResponse('No')">No</button>
+    </div>
+  </div>
+
+  <div class="button-group" style="margin-top: 40px;">
+    <button onclick="resetGame()">Reset</button>
+  </div>
+
+  <p id="result-message"></p>
+
+ 
+</body>
+</html>
