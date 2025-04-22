@@ -1,4 +1,4 @@
-  const mainSection = document.getElementById('main-section');
+    const mainSection = document.getElementById('main-section');
     const guessSection = document.getElementById('guess-section');
     const alternateDivs = document.querySelectorAll('.alternate-div');
     const resultMessage = document.getElementById('result-message');
@@ -48,7 +48,7 @@
         ? `🎉 I guess your favourite actor is: ${bestGuess}!`
         : `😅 Hmm... I couldn't guess it this time.`;
 
-      document.querySelector('.button-group').style.display = 'none';
+      document.querySelectorAll('.button-group')[1].style.display = 'none';
     }
 
     function resetGame() {
